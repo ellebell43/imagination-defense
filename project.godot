@@ -24,3 +24,13 @@ window/size/borderless=true
 [global_group]
 
 gui=""
+tower_manager=""
+
+[layer_names]
+
+3d_physics/layer_1="path"
+3d_physics/layer_2="enemy"
+3d_physics/layer_3="tower"
+3d_physics/layer_4="projectile"
+3d_physics/layer_5="floor"
+3d_physics/layer_6="world_object"

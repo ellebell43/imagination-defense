@@ -4,6 +4,8 @@ extends Control
 @export var starting_currency := 250
 @export var max_health := 100
 
+@onready var tower_manager: TowerManager = get_tree().get_first_node_in_group("tower_manager")
+
 @onready var store_panel: Panel = $Store
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var health_label: Label = %HealthLabel
@@ -30,8 +32,13 @@ func _ready() -> void:
 	health = max_health
 
 func _on_store_button_toggled(toggled_on: bool) -> void:
-	print(toggled_on)
 	if toggled_on:
 		animation_player.play("show_store")
 	else:
 		animation_player.play("hide_store")
+
+func _on_tower_test_button_down(source: BaseButton) -> void:
+	tower_manager.tower_type = source.get_meta("tower")
+
+func _on_tower_test_button_up() -> void:
+	tower_manager.tower_type = tower_manager.TowerType.NULL

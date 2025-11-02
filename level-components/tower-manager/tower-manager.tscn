@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://gnwyfjc81trp"]
+
+[ext_resource type="Script" uid="uid://dcl136vrm6w5k" path="res://level-components/tower-manager/tower-manager.gd" id="1_m8x8h"]
+
+[node name="TowerManager" type="Node3D" groups=["tower_manager"]]
+script = ExtResource("1_m8x8h")

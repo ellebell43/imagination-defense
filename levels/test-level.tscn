@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://cg5yn5j40fk6d"]
+[gd_scene load_steps=17 format=3 uid="uid://cg5yn5j40fk6d"]
 
-[ext_resource type="PackedScene" uid="uid://m10fm2uxl3gt" path="res://levels/level-components/gui/gui.tscn" id="1_l60ws"]
-[ext_resource type="PackedScene" uid="uid://bijbkrvh7vnnm" path="res://levels/level-components/primary-camera/primary-camera.tscn" id="1_uwesj"]
-[ext_resource type="PackedScene" uid="uid://cywwxfyd55je2" path="res://levels/level-components/enemy-path/enemy-path.tscn" id="2_ns7l7"]
-[ext_resource type="PackedScene" uid="uid://dvfq8ir22mcf" path="res://levels/level-components/enemies/base-enemy/base-enemy.tscn" id="3_wo0s5"]
+[ext_resource type="PackedScene" uid="uid://c5i54bmleh7eg" path="res://towers/base-tower/base-tower.tscn" id="1_1atlx"]
+[ext_resource type="PackedScene" uid="uid://m10fm2uxl3gt" path="res://level-components/gui/gui.tscn" id="1_l60ws"]
+[ext_resource type="PackedScene" uid="uid://bijbkrvh7vnnm" path="res://level-components/primary-camera/primary-camera.tscn" id="1_uwesj"]
+[ext_resource type="PackedScene" uid="uid://cywwxfyd55je2" path="res://level-components/enemy-path/enemy-path.tscn" id="2_ns7l7"]
+[ext_resource type="PackedScene" uid="uid://dvfq8ir22mcf" path="res://level-components/enemies/base-enemy/base-enemy.tscn" id="3_wo0s5"]
+[ext_resource type="PackedScene" uid="uid://gnwyfjc81trp" path="res://level-components/tower-manager/tower-manager.tscn" id="5_bk5ri"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ux3rr"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -38,6 +40,9 @@ size = Vector3(1, 0.6, 2)
 [sub_resource type="BoxMesh" id="BoxMesh_wo0s5"]
 size = Vector3(0.65, 1.4, 0.03)
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bk5ri"]
+data = PackedVector3Array(-2, 0.049999997, 2, 2, 0.049999997, 2, -2, -0.049999997, 2, 2, 0.049999997, 2, 2, -0.049999997, 2, -2, -0.049999997, 2, 2, 0.049999997, -2, -2, 0.049999997, -2, 2, -0.049999997, -2, -2, 0.049999997, -2, -2, -0.049999997, -2, 2, -0.049999997, -2, 2, 0.049999997, 2, 2, 0.049999997, -2, 2, -0.049999997, 2, 2, 0.049999997, -2, 2, -0.049999997, -2, 2, -0.049999997, 2, -2, 0.049999997, -2, -2, 0.049999997, 2, -2, -0.049999997, -2, -2, 0.049999997, 2, -2, -0.049999997, 2, -2, -0.049999997, -2, 2, 0.049999997, 2, -2, 0.049999997, 2, 2, 0.049999997, -2, -2, 0.049999997, 2, -2, 0.049999997, -2, 2, 0.049999997, -2, -2, -0.049999997, 2, 2, -0.049999997, 2, -2, -0.049999997, -2, 2, -0.049999997, 2, 2, -0.049999997, -2, -2, -0.049999997, -2)
+
 [node name="TestLevel" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -64,11 +69,25 @@ transform = Transform3D(0.89795846, 0, -0.44008023, 0, 1, 0, 0.44008023, 0, 0.89
 mesh = SubResource("BoxMesh_wo0s5")
 skeleton = NodePath("../..")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="PlayArea"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayArea/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_bk5ri")
+
+[node name="TestTower" parent="PlayArea" instance=ExtResource("1_1atlx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.72963554, 0.17500019, -0.5502629)
+
 [node name="GUI" parent="." instance=ExtResource("1_l60ws")]
 
 [node name="PrimaryCamera" parent="." instance=ExtResource("1_uwesj")]
 transform = Transform3D(1, 0, 0, 0, 0.34551123, 0.93841463, 0, -0.93841463, 0.34551123, -5.722046e-06, 3.18861, 1.3689032)
 
 [node name="EnemyPath" parent="." instance=ExtResource("2_ns7l7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.038413167, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.050400615, 0)
 enemy = ExtResource("3_wo0s5")
+
+[node name="TowerManager" parent="." node_paths=PackedStringArray("primary_camera") instance=ExtResource("5_bk5ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3543538, 0)
+primary_camera = NodePath("../PrimaryCamera")

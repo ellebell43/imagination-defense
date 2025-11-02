@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://m10fm2uxl3gt"]
+[gd_scene load_steps=10 format=3 uid="uid://m10fm2uxl3gt"]
 
-[ext_resource type="Script" uid="uid://dhm4f0fg1nc8y" path="res://levels/level-components/gui/gui.gd" id="1_dd61s"]
+[ext_resource type="Script" uid="uid://dhm4f0fg1nc8y" path="res://level-components/gui/gui.gd" id="1_dd61s"]
 [ext_resource type="Texture2D" uid="uid://c0wttyywu1kur" path="res://assets/gui/health-bar-bg.svg" id="2_3msr8"]
-[ext_resource type="LabelSettings" uid="uid://vgca4280kr0i" path="res://levels/level-components/gui/gui-label.tres" id="2_jcy1l"]
+[ext_resource type="LabelSettings" uid="uid://vgca4280kr0i" path="res://level-components/gui/gui-label.tres" id="2_jcy1l"]
 [ext_resource type="Texture2D" uid="uid://c21376cgvu2yt" path="res://assets/gui/health-bar.svg" id="2_tsf1m"]
+[ext_resource type="Texture2D" uid="uid://cgjl66intpwby" path="res://assets/icon.svg" id="5_tn7tp"]
 
 [sub_resource type="Animation" id="Animation_dd61s"]
 length = 0.001
@@ -135,9 +136,31 @@ theme_override_font_sizes/font_size = 32
 toggle_mode = true
 text = "Store"
 
+[node name="MarginContainer" type="MarginContainer" parent="Store"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="GridContainer" type="GridContainer" parent="Store/MarginContainer"]
+layout_mode = 2
+
+[node name="TowerTest" type="Button" parent="Store/MarginContainer/GridContainer"]
+layout_mode = 2
+icon = ExtResource("5_tn7tp")
+metadata/tower = -1
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_3msr8")
 }
 
 [connection signal="toggled" from="Store/StoreButton" to="." method="_on_store_button_toggled"]
+[connection signal="button_down" from="Store/MarginContainer/GridContainer/TowerTest" to="." method="_on_tower_test_button_down" flags=18]
+[connection signal="button_up" from="Store/MarginContainer/GridContainer/TowerTest" to="." method="_on_tower_test_button_up"]

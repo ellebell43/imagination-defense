@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cywwxfyd55je2"]
 
-[ext_resource type="Script" uid="uid://urrgpb0vhw2j" path="res://levels/level-components/enemy-path/enemy-path.gd" id="1_ivn3v"]
+[ext_resource type="Script" uid="uid://urrgpb0vhw2j" path="res://level-components/enemy-path/enemy-path.gd" id="1_ivn3v"]
 
 [sub_resource type="Curve3D" id="Curve3D_ux3rr"]
 _data = {
@@ -15,5 +15,22 @@ script = ExtResource("1_ivn3v")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+use_collision = true
+collision_mask = 4
+polygon = PackedVector2Array(-0.1, 0, -0.1, 0.01, 0.1, 0.01, 0.1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.05
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

@@ -1,9 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://bijbkrvh7vnnm"]
 
-[ext_resource type="Script" uid="uid://cbj5hym48s14w" path="res://levels/level-components/primary-camera/primary-camera.gd" id="1_s2wd8"]
+[ext_resource type="Script" uid="uid://cbj5hym48s14w" path="res://level-components/primary-camera/primary-camera.gd" id="1_s2wd8"]
 
 [node name="PrimaryCamera" type="Camera3D"]
 current = true
 script = ExtResource("1_s2wd8")
 
 [node name="MouseRay" type="RayCast3D" parent="."]
+collision_mask = 17

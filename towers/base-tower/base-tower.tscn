@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5i54bmleh7eg"]
+
+[ext_resource type="Material" uid="uid://dynrbqeyjgs6y" path="res://assets/textures/test-tower-purple.tres" id="1_4es7r"]
+[ext_resource type="Script" uid="uid://d2ro8ynukod2x" path="res://towers/base-tower/base_tower.gd" id="1_onjin"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4es7r"]
+material = ExtResource("1_4es7r")
+size = Vector3(0.15, 0.25, 0.15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_onjin"]
+size = Vector3(0.15, 0.25, 0.15)
+
+[node name="TestTower" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_4es7r")
+script = ExtResource("1_onjin")
+
+[node name="TowerCollision" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 37
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TowerCollision"]
+shape = SubResource("BoxShape3D_onjin")
