@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cywwxfyd55je2"]
+
+[ext_resource type="Script" uid="uid://urrgpb0vhw2j" path="res://levels/level-components/enemy-path/enemy-path.gd" id="1_ivn3v"]
+
+[sub_resource type="Curve3D" id="Curve3D_ux3rr"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.4249238, 0, -1.7499558, 0.22062385, -8.3088875e-05, -0.14665389, -0.22062385, 8.3088875e-05, 0.14665389, -1.702324, 0, -1.7199341, -0.20926702, -3.8981438e-05, -0.21182936, 0.20926702, 3.8981438e-05, 0.21182936, -1.7373492, 0, -0.8393012, -0.19962204, 8.3088875e-05, -0.43290535, 0.19962204, -8.3088875e-05, 0.43290535, 0.5974134, 0, -0.8975346, -0.060892224, 3.8981438e-05, -0.41446555, 0.060892224, -3.8981438e-05, 0.41446555, -0.72321093, 0, 0.10995175, 0.075473666, -3.8981438e-05, -0.52658355, -0.075473666, 3.8981438e-05, 0.52658355, 1.2509173, 0, 1.2263557, -0.049907565, -3.8981438e-05, -0.22484148, 0.049907565, 3.8981438e-05, 0.22484148, -1.4311744, 0, 1.87986, 0, 0, 0, 0, 0, 0, -0.8525506, 0, 2.2134197),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
+
+[node name="EnemyPath" type="Path3D"]
+curve = SubResource("Curve3D_ux3rr")
+script = ExtResource("1_ivn3v")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
