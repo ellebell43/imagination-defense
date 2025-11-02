@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://cg5yn5j40fk6d"]
+[gd_scene load_steps=14 format=3 uid="uid://cg5yn5j40fk6d"]
 
+[ext_resource type="PackedScene" uid="uid://m10fm2uxl3gt" path="res://levels/level-components/gui/gui.tscn" id="1_l60ws"]
 [ext_resource type="PackedScene" uid="uid://bijbkrvh7vnnm" path="res://levels/level-components/primary-camera/primary-camera.tscn" id="1_uwesj"]
 [ext_resource type="PackedScene" uid="uid://cywwxfyd55je2" path="res://levels/level-components/enemy-path/enemy-path.tscn" id="2_ns7l7"]
 [ext_resource type="PackedScene" uid="uid://dvfq8ir22mcf" path="res://levels/level-components/enemies/base-enemy/base-enemy.tscn" id="3_wo0s5"]
@@ -63,13 +64,7 @@ transform = Transform3D(0.89795846, 0, -0.44008023, 0, 1, 0, 0.44008023, 0, 0.89
 mesh = SubResource("BoxMesh_wo0s5")
 skeleton = NodePath("../..")
 
-[node name="GUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="GUI" parent="." instance=ExtResource("1_l60ws")]
 
 [node name="PrimaryCamera" parent="." instance=ExtResource("1_uwesj")]
 transform = Transform3D(1, 0, 0, 0, 0.34551123, 0.93841463, 0, -0.93841463, 0.34551123, -5.722046e-06, 3.18861, 1.3689032)

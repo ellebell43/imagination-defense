@@ -13,6 +13,5 @@ func _ready() -> void:
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_count += 1
-	print(spawn_count)
 	var new_enemy: Enemy = enemy.instantiate()
 	add_child(new_enemy)
