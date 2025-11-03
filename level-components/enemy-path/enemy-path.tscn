@@ -12,6 +12,7 @@ point_count = 8
 [node name="EnemyPath" type="Path3D"]
 curve = SubResource("Curve3D_ux3rr")
 script = ExtResource("1_ivn3v")
+spawn_time = 1
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true

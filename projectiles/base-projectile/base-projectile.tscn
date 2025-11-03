@@ -11,6 +11,7 @@ custom_solver_bias = 0.1
 radius = 0.05
 
 [node name="BaseProjectile" type="MeshInstance3D"]
+top_level = true
 mesh = SubResource("SphereMesh_oy021")
 script = ExtResource("1_7p27o")
 

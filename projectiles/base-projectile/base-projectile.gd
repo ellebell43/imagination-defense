@@ -1,13 +1,12 @@
 class_name Projectile
 extends MeshInstance3D
 
-@export var despawn_time := 2.0
-@export var damage := 1
-@export var speed := 3.0
-
 @onready var despawn_timer: Timer = $DespawnTimer
 
 var direction := Vector3.FORWARD
+var despawn_time := 2.0
+var damage := 1 # used by enemy node
+var speed := 3.0
 
 func _ready() -> void:
 	despawn_timer.wait_time = despawn_time
