@@ -1,6 +1,5 @@
-[gd_scene load_steps=17 format=3 uid="uid://cg5yn5j40fk6d"]
+[gd_scene load_steps=16 format=3 uid="uid://cg5yn5j40fk6d"]
 
-[ext_resource type="PackedScene" uid="uid://c5i54bmleh7eg" path="res://towers/base-tower/base-tower.tscn" id="1_1atlx"]
 [ext_resource type="PackedScene" uid="uid://m10fm2uxl3gt" path="res://level-components/gui/gui.tscn" id="1_l60ws"]
 [ext_resource type="PackedScene" uid="uid://bijbkrvh7vnnm" path="res://level-components/primary-camera/primary-camera.tscn" id="1_uwesj"]
 [ext_resource type="PackedScene" uid="uid://cywwxfyd55je2" path="res://level-components/enemy-path/enemy-path.tscn" id="2_ns7l7"]
@@ -75,9 +74,6 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayArea/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bk5ri")
-
-[node name="TestTower" parent="PlayArea" instance=ExtResource("1_1atlx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.72963554, 0.17500019, -0.5502629)
 
 [node name="GUI" parent="." instance=ExtResource("1_l60ws")]
 
