@@ -6,8 +6,8 @@ enum TargetMethod {FURTHEST, CLOSEST, STRONGEST, LAST}
 # exported variables
 @export var cost := 50
 @export var target_method := TargetMethod.FURTHEST
-@export var shoot_speed := .5
-@export var projectile_speed := 5.0
+@export var shoot_speed := 0.5
+@export var projectile_speed := 8.0
 @export var projectile: PackedScene
 @export var tower_range := 0.6
 @export var damage := 1

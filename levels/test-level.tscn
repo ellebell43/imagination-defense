@@ -76,6 +76,7 @@ collision_mask = 0
 shape = SubResource("ConcavePolygonShape3D_bk5ri")
 
 [node name="GUI" parent="." instance=ExtResource("1_l60ws")]
+starting_currency = 50
 
 [node name="PrimaryCamera" parent="." instance=ExtResource("1_uwesj")]
 transform = Transform3D(1, 0, 0, 0, 0.34551123, 0.93841463, 0, -0.93841463, 0.34551123, -5.722046e-06, 3.18861, 1.3689032)
