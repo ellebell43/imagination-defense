@@ -1,9 +1,10 @@
 [gd_scene load_steps=16 format=3 uid="uid://cg5yn5j40fk6d"]
 
+[ext_resource type="PackedScene" uid="uid://x6bh3mj21vbm" path="res://assets/environment-objects/bed.glb" id="1_1atlx"]
 [ext_resource type="PackedScene" uid="uid://m10fm2uxl3gt" path="res://level-components/gui/gui.tscn" id="1_l60ws"]
 [ext_resource type="PackedScene" uid="uid://bijbkrvh7vnnm" path="res://level-components/primary-camera/primary-camera.tscn" id="1_uwesj"]
 [ext_resource type="PackedScene" uid="uid://cywwxfyd55je2" path="res://level-components/enemy-path/enemy-path.tscn" id="2_ns7l7"]
-[ext_resource type="PackedScene" uid="uid://dvfq8ir22mcf" path="res://level-components/enemies/base-enemy/base-enemy.tscn" id="3_wo0s5"]
+[ext_resource type="PackedScene" uid="uid://dvfq8ir22mcf" path="res://enemies/base-enemy/base-enemy.tscn" id="3_wo0s5"]
 [ext_resource type="PackedScene" uid="uid://gnwyfjc81trp" path="res://level-components/tower-manager/tower-manager.tscn" id="5_bk5ri"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ux3rr"]
@@ -33,9 +34,6 @@ albedo_color = Color(0.37, 0.3034, 0.2035, 1)
 material = SubResource("StandardMaterial3D_uwesj")
 size = Vector3(4, 0.1, 4)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ns7l7"]
-size = Vector3(1, 0.6, 2)
-
 [sub_resource type="BoxMesh" id="BoxMesh_wo0s5"]
 size = Vector3(0.65, 1.4, 0.03)
 
@@ -58,11 +56,6 @@ mesh = SubResource("PlaneMesh_uwesj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, 0)
 mesh = SubResource("BoxMesh_uwesj")
 
-[node name="Bed" type="MeshInstance3D" parent="PlayArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.435503, 0.34, -0.95391476)
-mesh = SubResource("BoxMesh_ns7l7")
-skeleton = NodePath("../..")
-
 [node name="Door" type="MeshInstance3D" parent="PlayArea"]
 transform = Transform3D(0.89795846, 0, -0.44008023, 0, 1, 0, 0.44008023, 0, 0.89795846, -1.5119886, 0.74, 2.1293848)
 mesh = SubResource("BoxMesh_wo0s5")
@@ -75,6 +68,9 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayArea/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bk5ri")
 
+[node name="bed" parent="PlayArea" instance=ExtResource("1_1atlx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.437716, -0.09947514, -0.92788565)
+
 [node name="GUI" parent="." instance=ExtResource("1_l60ws")]
 starting_currency = 50
 
@@ -82,7 +78,7 @@ starting_currency = 50
 transform = Transform3D(1, 0, 0, 0, 0.34551123, 0.93841463, 0, -0.93841463, 0.34551123, -5.722046e-06, 3.18861, 1.3689032)
 
 [node name="EnemyPath" parent="." instance=ExtResource("2_ns7l7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.050400615, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0018037856, 0)
 enemy = ExtResource("3_wo0s5")
 
 [node name="TowerManager" parent="." node_paths=PackedStringArray("primary_camera") instance=ExtResource("5_bk5ri")]
