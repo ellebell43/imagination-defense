@@ -2,8 +2,11 @@ class_name TowerManager
 extends Node3D
 
 @export var primary_camera: PrimaryCamera
+@export var text_tower := true
 
 @onready var base_tower_scene = preload("res://towers/base-tower/base-tower.tscn")
+
+var cost = 50
 
 enum TowerType {
 	TEST = -1,

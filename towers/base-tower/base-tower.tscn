@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c5i54bmleh7eg"]
+[gd_scene load_steps=11 format=3 uid="uid://c5i54bmleh7eg"]
 
 [ext_resource type="Material" uid="uid://dynrbqeyjgs6y" path="res://assets/textures/test-tower-purple.tres" id="1_4es7r"]
 [ext_resource type="Script" uid="uid://d2ro8ynukod2x" path="res://towers/base-tower/base_tower.gd" id="1_onjin"]
 [ext_resource type="PackedScene" uid="uid://crgq5ps678md6" path="res://projectiles/base-projectile/base-projectile.tscn" id="3_gv64v"]
 [ext_resource type="Material" uid="uid://bcmpwumyo7hin" path="res://assets/textures/tower_range_blue.tres" id="4_ktkvw"]
+[ext_resource type="Texture2D" uid="uid://n6xuyujgbwmy" path="res://assets/gui/tower-images/headshot-test-tower.png" id="4_mr0c3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4es7r"]
 material = ExtResource("1_4es7r")
@@ -24,6 +25,7 @@ material = ExtResource("4_ktkvw")
 mesh = SubResource("BoxMesh_4es7r")
 script = ExtResource("1_onjin")
 projectile = ExtResource("3_gv64v")
+head_shot = ExtResource("4_mr0c3")
 
 [node name="TowerCollision" type="Area3D" parent="."]
 collision_layer = 4

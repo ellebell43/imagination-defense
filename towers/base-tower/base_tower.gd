@@ -11,6 +11,7 @@ enum TargetMethod {FURTHEST, CLOSEST, STRONGEST, LAST}
 @export var projectile: PackedScene
 @export var tower_range := 0.6
 @export var damage := 1
+@export var head_shot: CompressedTexture2D
 
 # nodes from the scene tree
 @onready var gui: GUI = get_tree().get_first_node_in_group("gui")
