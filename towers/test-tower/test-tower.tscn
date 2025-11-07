@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0t3r4xuu2l4s"]
+
+[ext_resource type="Script" uid="uid://gjftlm18koih" path="res://towers/test-tower/test_tower.gd" id="1_fln55"]
+[ext_resource type="PackedScene" uid="uid://c5i54bmleh7eg" path="res://towers/base-tower/base-tower.tscn" id="1_rjiq1"]
+[ext_resource type="Material" uid="uid://dynrbqeyjgs6y" path="res://assets/textures/test-tower-purple.tres" id="1_ua8nx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_d4fjo"]
+material = ExtResource("1_ua8nx")
+size = Vector3(0.15, 0.25, 0.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ltyfk"]
+size = Vector3(0.07, 0.07, 0.1)
+
+[node name="TestTower" node_paths=PackedStringArray("tower_mesh", "projectile_origin_object") instance=ExtResource("1_rjiq1")]
+script = ExtResource("1_fln55")
+tower_mesh = NodePath("TowerMesh")
+projectile_origin_object = NodePath("TowerMesh/Barrel")
+
+[node name="TowerMesh" type="MeshInstance3D" parent="." index="4"]
+mesh = SubResource("BoxMesh_d4fjo")
+
+[node name="Barrel" type="MeshInstance3D" parent="TowerMesh" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06666541, 0.11858437)
+mesh = SubResource("BoxMesh_ltyfk")

@@ -3,12 +3,12 @@
 [ext_resource type="Script" uid="uid://c53anj3fn824q" path="res://projectiles/base-projectile/base-projectile.gd" id="1_7p27o"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_oy021"]
-radius = 0.05
-height = 0.1
+radius = 0.038
+height = 0.075
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7p27o"]
-custom_solver_bias = 0.1
-radius = 0.05
+custom_solver_bias = 0.075
+radius = 0.038
 
 [node name="BaseProjectile" type="MeshInstance3D"]
 top_level = true

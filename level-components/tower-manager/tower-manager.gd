@@ -11,7 +11,7 @@ enum TowerType {
 @export var test_tower_cost: int = 50
 
 # tower scenes
-@onready var base_tower_scene = preload("res://towers/base-tower/base-tower.tscn")
+@onready var test_tower_scene = preload("res://towers/test-tower/test-tower.tscn")
 
 var new_tower: Tower # ref to new tower
 var new_tower_type := TowerType.NULL:
@@ -37,7 +37,7 @@ func create_tower(tower_type: TowerType) -> void:
 		TowerType.NULL:
 			return
 		_:
-			new_tower = base_tower_scene.instantiate()
+			new_tower = test_tower_scene.instantiate()
 			new_tower.cost = test_tower_cost
 	
 	# create tower if player has enough currency, else remove tower instance

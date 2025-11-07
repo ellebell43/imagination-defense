@@ -1,55 +1,42 @@
-[gd_scene load_steps=10 format=3 uid="uid://c5i54bmleh7eg"]
+[gd_scene load_steps=7 format=3 uid="uid://c5i54bmleh7eg"]
 
-[ext_resource type="Material" uid="uid://dynrbqeyjgs6y" path="res://assets/textures/test-tower-purple.tres" id="1_4es7r"]
 [ext_resource type="Script" uid="uid://d2ro8ynukod2x" path="res://towers/base-tower/base_tower.gd" id="1_onjin"]
 [ext_resource type="PackedScene" uid="uid://crgq5ps678md6" path="res://projectiles/base-projectile/base-projectile.tscn" id="3_gv64v"]
 [ext_resource type="Material" uid="uid://bcmpwumyo7hin" path="res://assets/textures/tower_range_blue.tres" id="4_ktkvw"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_4es7r"]
-material = ExtResource("1_4es7r")
-size = Vector3(0.15, 0.25, 0.15)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_onjin"]
 size = Vector3(0.15, 0.25, 0.15)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4es7r"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_ktkvw"]
-size = Vector3(0.07, 0.07, 0.1)
-
 [sub_resource type="SphereMesh" id="SphereMesh_mr0c3"]
 material = ExtResource("4_ktkvw")
 
-[node name="TestTower" type="MeshInstance3D"]
-mesh = SubResource("BoxMesh_4es7r")
+[node name="BaseTower" type="Node3D" node_paths=PackedStringArray("tower_mesh")]
 script = ExtResource("1_onjin")
 projectile = ExtResource("3_gv64v")
+tower_mesh = NodePath("")
 
-[node name="TowerCollision" type="Area3D" parent="."]
+[node name="TowerCollisionArea" type="Area3D" parent="."]
 collision_layer = 4
 collision_mask = 37
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TowerCollision"]
+[node name="TowerCollisionShape" type="CollisionShape3D" parent="TowerCollisionArea"]
 shape = SubResource("BoxShape3D_onjin")
 
-[node name="TowerRange" type="Area3D" parent="."]
+[node name="TowerRangeArea" type="Area3D" parent="."]
 collision_layer = 64
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TowerRange"]
+[node name="TowerRangeShape" type="CollisionShape3D" parent="TowerRangeArea"]
 shape = SubResource("SphereShape3D_4es7r")
 debug_fill = false
-
-[node name="Node3D" type="Node3D" parent="."]
 
 [node name="ShotTimer" type="Timer" parent="."]
 autostart = true
 
-[node name="Barrel" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06666541, 0.11858437)
-mesh = SubResource("BoxMesh_ktkvw")
-
 [node name="RangeMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_mr0c3")
+skeleton = NodePath("")
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]

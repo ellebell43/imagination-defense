@@ -1,16 +1,16 @@
 class_name Tower
-extends MeshInstance3D
+extends Node3D
 
 enum TargetMethod {FURTHEST, CLOSEST, STRONGEST, LAST}
 
 # exported variables
-var cost := 50
-@export var target_method := TargetMethod.FURTHEST
 @export var shoot_speed := 0.5
 @export var projectile_speed := 8.0
-@export var projectile: PackedScene
+@export var projectile: PackedScene = preload("res://projectiles/base-projectile/base-projectile.tscn")
 @export var tower_range := 0.6
 @export var damage := 1
+@export var tower_mesh: MeshInstance3D
+@export var projectile_origin_object: Node3D
 
 # nodes from the scene tree
 @onready var gui: GUI = get_tree().get_first_node_in_group("gui")
@@ -21,11 +21,17 @@ var cost := 50
 @onready var range_red: Material = preload("res://assets/textures/tower_range_red.tres")
 
 # children references
-@onready var collision_area: Area3D = $TowerCollision
-@onready var range_area: Area3D = $TowerRange
+@onready var collision_area: Area3D = $TowerCollisionArea
+@onready var collision_shape: CollisionShape3D = $TowerCollisionArea/TowerCollisionShape
+@onready var range_area: Area3D = $TowerRangeArea
+@onready var range_shape: CollisionShape3D = $TowerRangeArea/TowerRangeShape
 @onready var range_mesh: MeshInstance3D = $RangeMesh
 @onready var shot_timer: Timer = $ShotTimer
-@onready var barrel: MeshInstance3D = $Barrel
+
+var tower_material: Material # set in _ready()
+var shoot := false
+var cost := 50 # set by TowerManager
+var target_method = TargetMethod.FURTHEST
 
 var preview = false: 
 	set(new_preview):
@@ -39,22 +45,19 @@ var preview = false:
 				range_mesh.visible = false
 				shoot = true
 
-var tower_material := material_override
-var shoot := false
-
 func _ready() -> void:
-	var tower_range_shape: CollisionShape3D = range_area.get_child(0)
-	tower_range_shape.shape.radius = tower_range
+	range_shape.shape.radius = tower_range
 	range_mesh.mesh.radius = tower_range
 	shot_timer.wait_time = shoot_speed
+	tower_material = tower_mesh.material_override
 
 func _process(_delta: float) -> void:
 	if preview:
 		if collision_area.has_overlapping_bodies() or collision_area.get_overlapping_areas():
-			material_override = collision_texture
+			tower_mesh.material_override = collision_texture
 			range_mesh.material_override = range_red
 		else:
-			material_override = tower_material
+			tower_mesh.material_override = tower_material
 			range_mesh.material_override = range_blue
 		
 func _physics_process(_delta: float) -> void:
@@ -93,5 +96,8 @@ func _on_shot_timer_timeout() -> void:
 		add_child(shot)
 		shot.speed = projectile_speed
 		shot.damage = damage
-		shot.global_position = barrel.global_position
-		shot.direction = barrel.global_transform.basis.z
+		if projectile_origin_object:
+			shot.global_position = projectile_origin_object.global_position
+		else:
+			shot.global_position = global_position
+		shot.direction = global_transform.basis.z
