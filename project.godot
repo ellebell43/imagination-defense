@@ -25,6 +25,7 @@ window/size/borderless=true
 
 gui=""
 tower_manager=""
+cost_labels=""
 
 [layer_names]
 

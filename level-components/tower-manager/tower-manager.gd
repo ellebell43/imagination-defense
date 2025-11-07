@@ -1,45 +1,50 @@
 class_name TowerManager
 extends Node3D
 
-@export var primary_camera: PrimaryCamera
-@export var text_tower := true
-
-@onready var base_tower_scene = preload("res://towers/base-tower/base-tower.tscn")
-
-var cost = 50
-
 enum TowerType {
 	TEST = -1,
 	NULL = 0
 }
 
-var tower_type: TowerType # is set from gui
-var tower_instantiated := false # tracks if the tower has been created yet
+@export var primary_camera: PrimaryCamera
+@export var gui: GUI
+@export var test_tower_cost: int = 50
+
+# tower scenes
+@onready var base_tower_scene = preload("res://towers/base-tower/base-tower.tscn")
+
 var new_tower: Tower # ref to new tower
+var new_tower_type := TowerType.NULL:
+	set(type):
+		new_tower_type = type
+		if not type == TowerType.NULL and not new_tower:
+			create_tower(type)
+		if type == TowerType.NULL and new_tower: # drop tower out of preview and clear new_tower ref
+			new_tower.preview = false
+			new_tower = null
 
 func _process(_delta: float) -> void:
-	# create a tower if the type has been set (gui button pressed) and the tower hasn't already been created
-	if not tower_type == TowerType.NULL and not tower_instantiated:
-		create_tower()
+	self.new_tower_type = gui.new_tower_type # sync TowerManager and GUI new_tower_type
 	
-	# If the tower type is set and the tower is create, move the tower with the mouse
-	if not tower_type == TowerType.NULL and tower_instantiated:
+	# If the there's a new tower and it's in preview, move it with the mouse
+	if new_tower and new_tower.preview:
 		new_tower.position = primary_camera.mouse_ray.get_collision_point()
 		new_tower.position.y = -.25 # not sure why the towers hover .2m off the ground, but this fixes it
-	
-	# If tower type is null (released gui button), drop tower out of preview mode and clear tower creation status
-	if tower_instantiated and tower_type == TowerType.NULL:
-		new_tower.preview = false
-		tower_instantiated = false
 
-func create_tower() -> void:
+func create_tower(tower_type: TowerType) -> void:
+	# determine what type of tower needs instantiating
 	match tower_type:
-		TowerType.TEST:
-			new_tower = base_tower_scene.instantiate()
+		TowerType.NULL:
+			return
 		_:
 			new_tower = base_tower_scene.instantiate()
+			new_tower.cost = test_tower_cost
 	
-	add_child(new_tower)
-	new_tower.position = primary_camera.mouse_ray.get_collision_point()
-	new_tower.preview = true
-	tower_instantiated = true
+	# create tower if player has enough currency, else remove tower instance
+	if gui.currency >= new_tower.cost:
+		add_child(new_tower)
+		new_tower.position = primary_camera.mouse_ray.get_collision_point()
+		new_tower.preview = true
+	else:
+		new_tower.free()
+		new_tower = null

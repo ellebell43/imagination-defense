@@ -71,8 +71,14 @@ shape = SubResource("ConcavePolygonShape3D_bk5ri")
 [node name="bed" parent="PlayArea" instance=ExtResource("1_1atlx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.437716, -0.09947514, -0.92788565)
 
-[node name="GUI" parent="." instance=ExtResource("1_l60ws")]
+[node name="GUI" parent="." node_paths=PackedStringArray("tower_manager") instance=ExtResource("1_l60ws")]
 starting_currency = 50
+tower_manager = NodePath("../TowerManager")
+
+[node name="TowerManager" parent="." node_paths=PackedStringArray("primary_camera", "gui") instance=ExtResource("5_bk5ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3543538, 0)
+primary_camera = NodePath("../PrimaryCamera")
+gui = NodePath("../GUI")
 
 [node name="PrimaryCamera" parent="." instance=ExtResource("1_uwesj")]
 transform = Transform3D(1, 0, 0, 0, 0.34551123, 0.93841463, 0, -0.93841463, 0.34551123, -5.722046e-06, 3.18861, 1.3689032)
@@ -80,7 +86,3 @@ transform = Transform3D(1, 0, 0, 0, 0.34551123, 0.93841463, 0, -0.93841463, 0.34
 [node name="EnemyPath" parent="." instance=ExtResource("2_ns7l7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0018037856, 0)
 enemy = ExtResource("3_wo0s5")
-
-[node name="TowerManager" parent="." node_paths=PackedStringArray("primary_camera") instance=ExtResource("5_bk5ri")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3543538, 0)
-primary_camera = NodePath("../PrimaryCamera")

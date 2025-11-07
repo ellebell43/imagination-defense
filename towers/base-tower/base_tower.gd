@@ -4,14 +4,13 @@ extends MeshInstance3D
 enum TargetMethod {FURTHEST, CLOSEST, STRONGEST, LAST}
 
 # exported variables
-@export var cost := 50
+var cost := 50
 @export var target_method := TargetMethod.FURTHEST
 @export var shoot_speed := 0.5
 @export var projectile_speed := 8.0
 @export var projectile: PackedScene
 @export var tower_range := 0.6
 @export var damage := 1
-@export var head_shot: CompressedTexture2D
 
 # nodes from the scene tree
 @onready var gui: GUI = get_tree().get_first_node_in_group("gui")
@@ -39,11 +38,11 @@ var preview = false:
 				gui.currency -= cost
 				range_mesh.visible = false
 				shoot = true
-var tower_material: Material # set during _ready()
+
+var tower_material := material_override
 var shoot := false
 
 func _ready() -> void:
-	tower_material = material_override
 	var tower_range_shape: CollisionShape3D = range_area.get_child(0)
 	tower_range_shape.shape.radius = tower_range
 	range_mesh.mesh.radius = tower_range

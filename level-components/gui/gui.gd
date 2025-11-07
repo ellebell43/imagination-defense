@@ -3,8 +3,7 @@ extends Control
 
 @export var starting_currency := 250
 @export var max_health := 100
-
-@onready var tower_manager: TowerManager = get_tree().get_first_node_in_group("tower_manager")
+@export var tower_manager: TowerManager
 
 @onready var store_panel: Panel = $Store
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -13,6 +12,11 @@ extends Control
 @onready var currency_label: Label = %CurrencyLabel
 @onready var tower_buttons_grid: GridContainer = %TowerButtonsGrid
 @onready var tower_details_panel: VBoxContainer = %TowerDetailsPanel
+
+# cost labels
+@onready var test_tower_cost_label: Label = %TestTowerCostLabel
+
+var new_tower_type := TowerManager.TowerType.NULL # the TowerManager watches this variable to determine if a new tower should be made
 
 var currency := 500:
 	set(new_currency):
@@ -34,22 +38,36 @@ func _ready() -> void:
 	health = max_health
 	tower_buttons_grid.visible = true
 	tower_details_panel.visible = false
+	# set cost labels
+	test_tower_cost_label.text = "Cost: " + str(tower_manager.test_tower_cost)
+	test_tower_cost_label.set_meta("cost", tower_manager.test_tower_cost)
 
-# TODO: Create a scene per button that contains all variable for tower cost or smthn like that...
+func _process(_delta: float) -> void:
+	for item in get_tree().get_nodes_in_group("cost_labels"):
+		if item is Label:
+			var item_cost = item.get_meta("cost")
+			if item_cost is int and item_cost > currency:
+				item.label_settings.font_color = Color.RED
+			else:
+				item.label_settings.font_color = Color.WHITE
 
+# toggle store panel visibility
 func _on_store_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		animation_player.play("show_store")
 	else:
 		animation_player.play("hide_store")
 
-func _on_tower_test_button_down(source: BaseButton) -> void:
-	match source:
-		_:
-			if currency >= tower_manager.cost:
-				tower_manager.tower_type = source.get_meta("tower") # creates tower by setting tower_manager's tower_type
-				tower_details_panel.visible = true
+func _on_tower_purchase_button_up() -> void:
+	new_tower_type = TowerManager.TowerType.NULL 
+	#tower_details_panel.visible = false
 
-func _on_tower_test_button_up() -> void:
-	tower_manager.tower_type = tower_manager.TowerType.NULL # this sets the new tower out of preview and makes it no longer follow the mouse
-	tower_details_panel.visible = false
+func _on_tower_purchase_button_down(tower_id: int) -> void:
+	new_tower_type = tower_id as TowerManager.TowerType
+	#tower_details_panel.visible = true
+
+func _on_button_hover() -> void:
+	pass
+	
+func _on_stop_button_hover() -> void:
+	pass

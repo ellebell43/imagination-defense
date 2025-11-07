@@ -4,8 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://c0wttyywu1kur" path="res://assets/gui/health-bar-bg.svg" id="2_3msr8"]
 [ext_resource type="LabelSettings" uid="uid://vgca4280kr0i" path="res://level-components/gui/gui-label.tres" id="2_jcy1l"]
 [ext_resource type="Texture2D" uid="uid://c21376cgvu2yt" path="res://assets/gui/health-bar.svg" id="2_tsf1m"]
-[ext_resource type="Texture2D" uid="uid://cgjl66intpwby" path="res://assets/icon.svg" id="5_tn7tp"]
 [ext_resource type="Texture2D" uid="uid://n6xuyujgbwmy" path="res://assets/gui/tower-images/headshot-test-tower.png" id="6_lp0mj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cdt2i"]
+font_size = 32
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_dd61s"]
 length = 0.001
@@ -130,14 +134,14 @@ grow_vertical = 2
 
 [node name="StoreButton" type="Button" parent="Store"]
 layout_mode = 0
-offset_left = -86.0
-offset_right = 4.0
+offset_left = -90.0
 offset_bottom = 53.0
 theme_override_font_sizes/font_size = 32
 toggle_mode = true
 text = "Store"
 
 [node name="MarginContainer" type="MarginContainer" parent="Store"]
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -152,11 +156,29 @@ theme_override_constants/margin_bottom = 20
 [node name="TowerButtonsGrid" type="GridContainer" parent="Store/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+columns = 3
 
-[node name="TowerTest" type="Button" parent="Store/MarginContainer/TowerButtonsGrid"]
+[node name="TestTower" type="VBoxContainer" parent="Store/MarginContainer/TowerButtonsGrid"]
 layout_mode = 2
-icon = ExtResource("5_tn7tp")
+
+[node name="PurchaseTestTower" type="Button" parent="Store/MarginContainer/TowerButtonsGrid/TestTower"]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+icon = ExtResource("6_lp0mj")
+icon_alignment = 1
+expand_icon = true
 metadata/tower = -1
+
+[node name="TestTowerCostLabel" type="Label" parent="Store/MarginContainer/TowerButtonsGrid/TestTower" groups=["cost_labels"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Cost: 50"
+label_settings = SubResource("LabelSettings_cdt2i")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/cost = 0
+metadata/tower_type = -1
 
 [node name="TowerDetailsPanel" type="VBoxContainer" parent="Store/MarginContainer"]
 unique_name_in_owner = true
@@ -180,4 +202,5 @@ libraries = {
 }
 
 [connection signal="toggled" from="Store/StoreButton" to="." method="_on_store_button_toggled"]
-[connection signal="button_up" from="Store/MarginContainer/TowerButtonsGrid/TowerTest" to="." method="_on_tower_test_button_up"]
+[connection signal="button_down" from="Store/MarginContainer/TowerButtonsGrid/TestTower/PurchaseTestTower" to="." method="_on_tower_purchase_button_down" binds= [-1]]
+[connection signal="button_up" from="Store/MarginContainer/TowerButtonsGrid/TestTower/PurchaseTestTower" to="." method="_on_tower_purchase_button_up"]
