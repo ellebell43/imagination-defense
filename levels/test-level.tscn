@@ -81,7 +81,7 @@ primary_camera = NodePath("../PrimaryCamera")
 gui = NodePath("../GUI")
 
 [node name="PrimaryCamera" parent="." instance=ExtResource("1_uwesj")]
-transform = Transform3D(1, 0, 0, 0, 0.34551123, 0.93841463, 0, -0.93841463, 0.34551123, -5.722046e-06, 3.18861, 1.3689032)
+transform = Transform3D(1, 0, 0, 0, 0.34551123, 0.93841463, 0, -0.93841463, 0.34551123, 0.975, 3.189, 1.369)
 
 [node name="EnemyPath" parent="." instance=ExtResource("2_ns7l7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0018037856, 0)

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://5f2sbss21ijl"]
+
+[ext_resource type="PackedScene" uid="uid://c5i54bmleh7eg" path="res://towers/base-tower/base-tower.tscn" id="1_tj4iy"]
+[ext_resource type="Script" uid="uid://d0ybkcc75ga1e" path="res://towers/goober/goober.gd" id="2_2kxcd"]
+
+[node name="Goober" instance=ExtResource("1_tj4iy")]
+script = ExtResource("2_2kxcd")

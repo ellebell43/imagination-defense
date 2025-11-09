@@ -11,7 +11,6 @@ extends Control
 @onready var health_bar: TextureProgressBar = %HealthBar
 @onready var currency_label: Label = %CurrencyLabel
 @onready var tower_buttons_grid: GridContainer = %TowerButtonsGrid
-@onready var tower_details_panel: VBoxContainer = %TowerDetailsPanel
 
 # cost labels
 @onready var test_tower_cost_label: Label = %TestTowerCostLabel
@@ -36,8 +35,6 @@ var health := 100:
 func _ready() -> void:
 	currency = starting_currency
 	health = max_health
-	tower_buttons_grid.visible = true
-	tower_details_panel.visible = false
 	# set cost labels
 	test_tower_cost_label.text = "Cost: " + str(tower_manager.test_tower_cost)
 	test_tower_cost_label.set_meta("cost", tower_manager.test_tower_cost)
@@ -50,13 +47,6 @@ func _process(_delta: float) -> void:
 				item.label_settings.font_color = Color.RED
 			else:
 				item.label_settings.font_color = Color.WHITE
-
-# toggle store panel visibility
-func _on_store_button_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		animation_player.play("show_store")
-	else:
-		animation_player.play("hide_store")
 
 func _on_tower_purchase_button_up() -> void:
 	new_tower_type = TowerManager.TowerType.NULL 
