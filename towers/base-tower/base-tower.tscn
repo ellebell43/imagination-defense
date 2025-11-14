@@ -1,21 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5i54bmleh7eg"]
+[gd_scene load_steps=6 format=3 uid="uid://c5i54bmleh7eg"]
 
 [ext_resource type="Script" uid="uid://d2ro8ynukod2x" path="res://towers/base-tower/base_tower.gd" id="1_onjin"]
-[ext_resource type="PackedScene" uid="uid://crgq5ps678md6" path="res://projectiles/base-projectile/base-projectile.tscn" id="3_gv64v"]
 [ext_resource type="Material" uid="uid://bcmpwumyo7hin" path="res://assets/textures/tower_range_blue.tres" id="4_ktkvw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_onjin"]
-size = Vector3(0.15, 0.25, 0.15)
+size = Vector3(0.15, 0.25, 0.17460938)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4es7r"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_mr0c3"]
 material = ExtResource("4_ktkvw")
 
-[node name="BaseTower" type="Node3D" node_paths=PackedStringArray("tower_mesh")]
+[node name="BaseTower" type="Node3D"]
 script = ExtResource("1_onjin")
-projectile = ExtResource("3_gv64v")
-tower_mesh = NodePath("")
 
 [node name="TowerCollisionArea" type="Area3D" parent="."]
 collision_layer = 4

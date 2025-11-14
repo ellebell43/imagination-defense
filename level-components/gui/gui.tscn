@@ -128,7 +128,7 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -397.0
+offset_right = 397.0
 grow_horizontal = 0
 grow_vertical = 2
 
@@ -138,6 +138,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -831.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 20
@@ -172,6 +173,28 @@ vertical_alignment = 1
 metadata/cost = 0
 metadata/tower_type = -1
 
+[node name="Goober" type="VBoxContainer" parent="Store/MarginContainer/TowerButtonsGrid"]
+layout_mode = 2
+
+[node name="PurchaseGoober" type="Button" parent="Store/MarginContainer/TowerButtonsGrid/Goober"]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+icon = ExtResource("6_lp0mj")
+icon_alignment = 1
+expand_icon = true
+metadata/tower = 1
+
+[node name="GooberCostLabel" type="Label" parent="Store/MarginContainer/TowerButtonsGrid/Goober" groups=["cost_labels"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Cost: 50"
+label_settings = SubResource("LabelSettings_cdt2i")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/cost = 0
+metadata/tower_type = -1
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_3msr8")
@@ -179,3 +202,5 @@ libraries = {
 
 [connection signal="button_down" from="Store/MarginContainer/TowerButtonsGrid/TestTower/PurchaseTestTower" to="." method="_on_tower_purchase_button_down" binds= [-1]]
 [connection signal="button_up" from="Store/MarginContainer/TowerButtonsGrid/TestTower/PurchaseTestTower" to="." method="_on_tower_purchase_button_up"]
+[connection signal="button_down" from="Store/MarginContainer/TowerButtonsGrid/Goober/PurchaseGoober" to="." method="_on_tower_purchase_button_down" binds= [1]]
+[connection signal="button_up" from="Store/MarginContainer/TowerButtonsGrid/Goober/PurchaseGoober" to="." method="_on_tower_purchase_button_up"]

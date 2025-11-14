@@ -3,15 +3,18 @@ extends Node3D
 
 enum TowerType {
 	TEST = -1,
-	NULL = 0
+	NULL = 0,
+	GOOBER = 1
 }
 
 @export var primary_camera: PrimaryCamera
 @export var gui: GUI
 @export var test_tower_cost: int = 50
+@export var goober_cost: int = 25
 
 # tower scenes
 @onready var test_tower_scene = preload("res://towers/test-tower/test-tower.tscn")
+@onready var goober_scene = preload("res://towers/goober/goober.tscn")
 
 var new_tower: Tower # ref to new tower
 var new_tower_type := TowerType.NULL:
@@ -36,6 +39,9 @@ func create_tower(tower_type: TowerType) -> void:
 	match tower_type:
 		TowerType.NULL:
 			return
+		TowerType.GOOBER:
+			new_tower = goober_scene.instantiate()
+			new_tower.cost = goober_cost
 		_:
 			new_tower = test_tower_scene.instantiate()
 			new_tower.cost = test_tower_cost

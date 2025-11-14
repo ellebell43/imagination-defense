@@ -9,8 +9,9 @@ enum TargetMethod {FURTHEST, CLOSEST, STRONGEST, LAST}
 @export var projectile: PackedScene = preload("res://projectiles/base-projectile/base-projectile.tscn")
 @export var tower_range := 0.6
 @export var damage := 1
-@export var tower_mesh: MeshInstance3D
+@export var tower_meshes: Array[MeshInstance3D]
 @export var projectile_origin_object: Node3D
+@export var animation_player: AnimationPlayer
 
 # nodes from the scene tree
 @onready var gui: GUI = get_tree().get_first_node_in_group("gui")
@@ -49,15 +50,21 @@ func _ready() -> void:
 	range_shape.shape.radius = tower_range
 	range_mesh.mesh.radius = tower_range
 	shot_timer.wait_time = shoot_speed
-	tower_material = tower_mesh.material_override
+	#tower_material = tower_mesh.material_override <- breaks with exported blender mesh
 
 func _process(_delta: float) -> void:
 	if preview:
 		if collision_area.has_overlapping_bodies() or collision_area.get_overlapping_areas():
-			tower_mesh.material_override = collision_texture
+			for child in tower_meshes:
+				child.set_surface_override_material(0, collision_texture)
+				child.set_surface_override_material(1, collision_texture)
+			#tower_mesh.material_override = collision_texture
 			range_mesh.material_override = range_red
 		else:
-			tower_mesh.material_override = tower_material
+			for child in tower_meshes:
+				child.set_surface_override_material(0, null)
+				child.set_surface_override_material(1, null)
+			#tower_mesh.material_override = tower_material
 			range_mesh.material_override = range_blue
 		
 func _physics_process(_delta: float) -> void:
@@ -92,12 +99,19 @@ func determine_target() -> PathFollow3D:
 
 func _on_shot_timer_timeout() -> void:
 	if shoot:
-		var shot: Projectile = projectile.instantiate()
-		add_child(shot)
-		shot.speed = projectile_speed
-		shot.damage = damage
-		if projectile_origin_object:
-			shot.global_position = projectile_origin_object.global_position
+		if animation_player:
+			animation_player.play("shoot")
+			
 		else:
-			shot.global_position = global_position
-		shot.direction = global_transform.basis.z
+			fire()
+
+func fire() -> void:
+	var shot: Projectile = projectile.instantiate()
+	add_child(shot)
+	shot.speed = projectile_speed
+	shot.damage = damage
+	if projectile_origin_object:
+		shot.global_position = projectile_origin_object.global_position
+	else:
+		shot.global_position = global_position
+	shot.direction = global_transform.basis.z

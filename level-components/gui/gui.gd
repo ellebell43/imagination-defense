@@ -14,6 +14,7 @@ extends Control
 
 # cost labels
 @onready var test_tower_cost_label: Label = %TestTowerCostLabel
+@onready var goober_cost_label: Label = %GooberCostLabel
 
 var new_tower_type := TowerManager.TowerType.NULL # the TowerManager watches this variable to determine if a new tower should be made
 
@@ -38,6 +39,8 @@ func _ready() -> void:
 	# set cost labels
 	test_tower_cost_label.text = "Cost: " + str(tower_manager.test_tower_cost)
 	test_tower_cost_label.set_meta("cost", tower_manager.test_tower_cost)
+	goober_cost_label.text = "Cost: " + str(tower_manager.goober_cost)
+	goober_cost_label.set_meta("cost", tower_manager.goober_cost)
 
 func _process(_delta: float) -> void:
 	for item in get_tree().get_nodes_in_group("cost_labels"):
