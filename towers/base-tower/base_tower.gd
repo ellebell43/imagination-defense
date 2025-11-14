@@ -101,7 +101,7 @@ func _on_shot_timer_timeout() -> void:
 	if shoot:
 		if animation_player:
 			animation_player.play("shoot")
-			
+			fire()
 		else:
 			fire()
 
