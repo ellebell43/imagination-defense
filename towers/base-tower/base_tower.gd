@@ -51,20 +51,20 @@ func _ready() -> void:
 	range_mesh.mesh.radius = tower_range
 	shot_timer.wait_time = shoot_speed
 	#tower_material = tower_mesh.material_override <- breaks with exported blender mesh
+	if animation_player:
+		animation_player.connect("animation_finished", _on_anim_end)
 
 func _process(_delta: float) -> void:
 	if preview:
 		if collision_area.has_overlapping_bodies() or collision_area.get_overlapping_areas():
 			for child in tower_meshes:
-				child.set_surface_override_material(0, collision_texture)
-				child.set_surface_override_material(1, collision_texture)
-			#tower_mesh.material_override = collision_texture
+				for n in child.get_surface_override_material_count():
+					child.set_surface_override_material(n, collision_texture)
 			range_mesh.material_override = range_red
 		else:
 			for child in tower_meshes:
-				child.set_surface_override_material(0, null)
-				child.set_surface_override_material(1, null)
-			#tower_mesh.material_override = tower_material
+				for n in child.get_surface_override_material_count():
+					child.set_surface_override_material(n, null)
 			range_mesh.material_override = range_blue
 		
 func _physics_process(_delta: float) -> void:
@@ -100,8 +100,8 @@ func determine_target() -> PathFollow3D:
 func _on_shot_timer_timeout() -> void:
 	if shoot:
 		if animation_player:
+			animation_player.speed_scale = 4
 			animation_player.play("shoot")
-			fire()
 		else:
 			fire()
 
@@ -115,3 +115,8 @@ func fire() -> void:
 	else:
 		shot.global_position = global_position
 	shot.direction = global_transform.basis.z
+	
+func _on_anim_end(anim_name: StringName) -> void:
+	if anim_name == "shoot":
+		fire()
+		animation_player.play("reset")
