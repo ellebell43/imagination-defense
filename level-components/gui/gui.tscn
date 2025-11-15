@@ -1,73 +1,23 @@
-[gd_scene load_steps=11 format=3 uid="uid://m10fm2uxl3gt"]
+[gd_scene load_steps=8 format=3 uid="uid://m10fm2uxl3gt"]
 
 [ext_resource type="Script" uid="uid://dhm4f0fg1nc8y" path="res://level-components/gui/gui.gd" id="1_dd61s"]
 [ext_resource type="Texture2D" uid="uid://c0wttyywu1kur" path="res://assets/gui/health-bar-bg.svg" id="2_3msr8"]
 [ext_resource type="LabelSettings" uid="uid://vgca4280kr0i" path="res://level-components/gui/gui-label.tres" id="2_jcy1l"]
 [ext_resource type="Texture2D" uid="uid://c21376cgvu2yt" path="res://assets/gui/health-bar.svg" id="2_tsf1m"]
 [ext_resource type="Texture2D" uid="uid://n6xuyujgbwmy" path="res://assets/gui/tower-images/headshot-test-tower.png" id="6_lp0mj"]
+[ext_resource type="Texture2D" uid="uid://oksg34my3p6q" path="res://assets/gui/tower-images/goober-headshot.png" id="6_lrnym"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cdt2i"]
 font_size = 32
 outline_size = 6
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Animation" id="Animation_dd61s"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Store:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1920, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_3msr8"]
-resource_name = "hide_store"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Store:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1420, 0), Vector2(1920, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_tsf1m"]
-resource_name = "show_store"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Store:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.52),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1920, 0), Vector2(1420, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3msr8"]
-_data = {
-&"RESET": SubResource("Animation_dd61s"),
-&"hide_store": SubResource("Animation_3msr8"),
-&"show_store": SubResource("Animation_tsf1m")
-}
-
 [node name="GUI" type="Control" groups=["gui"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -448.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dd61s")
@@ -122,13 +72,25 @@ grow_vertical = 2
 text = "Health"
 label_settings = ExtResource("2_jcy1l")
 
+[node name="RoundLabel" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Round 1 of 20"
+label_settings = ExtResource("2_jcy1l")
+
+[node name="PlayPauseButton" type="Button" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+
 [node name="Store" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 397.0
+offset_right = 448.0
 grow_horizontal = 0
 grow_vertical = 2
 
@@ -138,7 +100,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -831.0
+offset_right = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 20
@@ -179,7 +141,7 @@ layout_mode = 2
 [node name="PurchaseGoober" type="Button" parent="Store/MarginContainer/TowerButtonsGrid/Goober"]
 custom_minimum_size = Vector2(110, 110)
 layout_mode = 2
-icon = ExtResource("6_lp0mj")
+icon = ExtResource("6_lrnym")
 icon_alignment = 1
 expand_icon = true
 metadata/tower = 1
@@ -194,11 +156,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/cost = 0
 metadata/tower_type = -1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3msr8")
-}
 
 [connection signal="button_down" from="Store/MarginContainer/TowerButtonsGrid/TestTower/PurchaseTestTower" to="." method="_on_tower_purchase_button_down" binds= [-1]]
 [connection signal="button_up" from="Store/MarginContainer/TowerButtonsGrid/TestTower/PurchaseTestTower" to="." method="_on_tower_purchase_button_up"]

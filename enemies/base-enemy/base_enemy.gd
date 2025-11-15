@@ -1,7 +1,7 @@
 class_name Enemy
 extends PathFollow3D
 
-@export var speed := 3.0
+@export var speed := 0.5
 @export var reward := 10
 @export var health := 2:
 	set(new_health):
