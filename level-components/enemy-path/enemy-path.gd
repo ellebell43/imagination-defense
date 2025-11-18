@@ -1,7 +1,7 @@
 class_name EnemyPath
 extends Path3D
 
-enum EnemyType {TEST = -1, SHADOW = 1}
+enum EnemyType {TEST = -1, PIP = 1}
 
 @export var spawn_time := 2
 ## Defines the difficulty of the game. Max domain defines the total number of rounds and max value defines the maximum difficulty a round can be. Min domain and value need to remain at 1
@@ -31,6 +31,7 @@ var end_game = false # watched by the gui
 
 # Enemy scenes
 var base_enemy := preload("res://enemies/base-enemy/base-enemy.tscn") # EenemyType.TEST
+var pip_enemy := preload("res://enemies/pip/pip.tscn") # EenemyType.TEST
 
 func _ready() -> void:
 	spawn_timer.wait_time = spawn_time
@@ -58,6 +59,6 @@ func end_round():
 func _on_spawn_timer_timeout() -> void:
 	if in_round and spawn_count > 0:
 		spawn_count -= 1
-		var new_enemy: Enemy = base_enemy.instantiate()
+		var new_enemy: Enemy = pip_enemy.instantiate()
 		#new_enemy.speed *= current_difficulty
 		add_child(new_enemy)

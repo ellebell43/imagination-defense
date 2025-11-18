@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c2hdl5467x7h3"]
+
+[ext_resource type="Shader" uid="uid://4kvrv3o4psx7" path="res://assets/shaders/metaball3d.gdshader" id="1_lmlh6"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_lmlh6")
+shader_parameter/ball_pos = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/radi = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/blend_r = 0.0
+shader_parameter/base_color = Color(0, 0, 0, 1)
+shader_parameter/fresnel_color = Color(0, 0, 0, 1)
+shader_parameter/fresnel_strength = 0.89
+shader_parameter/fresnel_emition = 0.505
+shader_parameter/alpha = 0.99

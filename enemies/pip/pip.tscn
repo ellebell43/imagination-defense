@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://dfdx4e1k08fh3"]
+
+[ext_resource type="Script" uid="uid://dk1m0riqhqhda" path="res://enemies/pip/pip.gd" id="1_mmwdq"]
+[ext_resource type="Material" uid="uid://c2hdl5467x7h3" path="res://assets/textures/metaball3d.tres" id="2_pwhsl"]
+[ext_resource type="Script" uid="uid://jllvd6586scy" path="res://enemies/pip/metaball_3d.gd" id="3_hhsa8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmwdq"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_pwhsl"]
+material = SubResource("StandardMaterial3D_mmwdq")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mmwdq"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_pwhsl"]
+sky_material = SubResource("ProceduralSkyMaterial_mmwdq")
+
+[sub_resource type="Environment" id="Environment_hhsa8"]
+background_mode = 2
+sky = SubResource("Sky_pwhsl")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_mmwdq"]
+material = ExtResource("2_pwhsl")
+radius = 1.0
+height = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mmwdq"]
+radius = 0.1
+
+[node name="Pip" type="PathFollow3D"]
+loop = false
+script = ExtResource("1_mmwdq")
+
+[node name="glow" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.028, 0, 0, 0, 0.028, 0, 0, 0, 0.028, 0, 0.098, 0)
+visible = false
+mesh = SubResource("SphereMesh_pwhsl")
+skeleton = NodePath("../Metaball3D")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hhsa8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Metaball3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.099, 0, 0, 0, 0.099, 0, 0, 0, 0.099, 0, 0.098, 0)
+mesh = SubResource("SphereMesh_mmwdq")
+skeleton = NodePath("../..")
+script = ExtResource("3_hhsa8")
+
+[node name="EnemyCollisionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.098, 0)
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyCollisionArea"]
+shape = SubResource("SphereShape3D_mmwdq")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.9886071, 0, 0.15051892, 0, 1, 0, -0.15051892, 0, -0.9886071, 0.020975411, 0.09035103, -0.15229797)
+
+[connection signal="area_entered" from="EnemyCollisionArea" to="." method="_on_area_3d_area_entered"]
